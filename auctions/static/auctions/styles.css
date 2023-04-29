@@ -1,0 +1,30 @@
+.nonlayout {
+	padding-left: 2%;
+	padding-right: 2%;
+}
+
+.dropdown-menu{
+text-align: center;
+}
+
+.h1{
+animation : slide 2s;
+}
+
+@keyframes slide{
+from{
+left :-100px;
+}
+to{
+left: 400px;
+}
+}
+
+.text-left{
+left:0;
+right:0;
+margin-left:auto;
+margin-right:auto;
+width: 800px;
+height: 500px;
+}

@@ -1,0 +1,96 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+        {% if message %}
+<div class="alert alert-danger" xmlns:left="http://www.w3.org/1999/xhtml">{{ message }}</div>
+        {% endif %}
+
+        <!-- Jumbotron -->
+        <div class="jumbotron text-center lighten-4" style="color : #219ebc ">
+
+            <!-- Title -->
+            <br><h1><strong>퀵 요청하기</strong></h1> <br> <br>
+            <br>
+            <img src="../../static/auctions/img/request.svg" alt="indeximage" style="height: 500px;" class="embed-responsive">
+            <br> <br> <br>
+            <!-- <hr class="my-4 pb-2"> -->
+
+            <!-- Grid row -->
+            <div class="text-left" >
+
+                <form action="{% url 'createlisting' %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <select class="form-control" name="address_1" placeholder="카테고리" required>
+                            <option value="">배송 지역을 선택하세요</option>
+                            <option value="서울특별시">서울특별시</option>
+                            <option value="경기도">경기도</option>
+                            <option value="인천광역시">인천광역시</option>
+                            <option value="강원도">강원도</option>
+                            <option value="충청남도">충청남도</option>
+                            <option value="충청북도">충청북도</option>
+                            <option value="대전광역시">대전광역시</option>
+                            <option value="대구광역시">대구광역시</option>
+                            <option value="세종특별시">세종특별시</option>
+                            <option value="경상북도">경상북도</option>
+                            <option value="경상남도">경상남도</option>
+                            <option value="전라북도">전라북도</option>
+                            <option value="전라남도">전라남도</option>
+                            <option value="광주광역시">광주광역시</option>
+                            <option value="울산광역시">울산광역시</option>
+                            <option value="부산광역시">부산광역시</option>
+                            <option value="제주특별자치도">제주특별자치도</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" autofocus type="text" name="address_detail_1" placeholder="픽업 상세주소">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="address" placeholder="카테고리" required>
+                            <option value="">배송 지역을 선택하세요</option>
+                            <option value="서울특별시">서울특별시</option>
+                            <option value="경기도">경기도</option>
+                            <option value="인천광역시">인천광역시</option>
+                            <option value="강원도">강원도</option>
+                            <option value="충청남도">충청남도</option>
+                            <option value="충청북도">충청북도</option>
+                            <option value="대전광역시">대전광역시</option>
+                            <option value="대구광역시">대구광역시</option>
+                            <option value="세종특별시">세종특별시</option>
+                            <option value="경상북도">경상북도</option>
+                            <option value="경상남도">경상남도</option>
+                            <option value="전라북도">전라북도</option>
+                            <option value="전라남도">전라남도</option>
+                            <option value="광주광역시">광주광역시</option>
+                            <option value="울산광역시">울산광역시</option>
+                            <option value="부산광역시">부산광역시</option>
+                            <option value="제주특별자치도">제주특별자치도</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <input class="form-control" autofocus type="text" name="address_detail" placeholder="배송 상세주소">
+                    </div>
+                    <div class="form-group">
+                        <select class="form-control" name="category" placeholder="카테고리" required>
+                            <option value="">물품 카테고리를 선택하세요</option>
+                            <option value="일반">일반</option>
+                            <option value="파손">파손</option>
+                            <option value="신선">신선</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input class="form-control" type="text" name="starting_bid" placeholder="경매 시작 금액">
+                    </div>
+                       <div class="form-group">
+                        <textarea class="form-control" name="description" rows="4" placeholder="요청사항"></textarea>
+                    </div>
+
+                    <p align="center"><input class="btn btn btn-outline-primary" type="submit" value="등록하기"></p>
+                </form>
+            </div>
+        </div>
+        <!-- End Jumbotron -->
+
+{% endblock %}

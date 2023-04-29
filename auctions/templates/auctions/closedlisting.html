@@ -1,0 +1,53 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <br>
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+
+    {% endif %}
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center">
+        <!-- Title -->
+        <h2 class="card-title h1"style="color : #219ebc ">종료된 매칭</h2>
+        <!-- Subtitle -->
+        <p class="black-text my-4 font-weight-bold">종료된 매칭을 확인하세요.</p>
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-center">
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+                {% if empty %}
+                    <br>
+                    <img src="../../static/auctions/img/forclosed.svg" alt="indeximage" style="height: 350px;" class="embed-responsive">
+                    <br> <br> <br>
+                    <h3>종료된 경매정보가 없습니다.</h3>
+                {% else %}
+                    {% for product in products %}
+                        <br>
+                        <!-- Card Regular -->
+                        <div class="card card-cascade" >
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade text-center">
+                                <!-- Title -->
+                                <h4 class="card-title"><strong>{{product.address}}</strong></h4>
+                                {% if product.winner == request.user.username %}
+                                    <p class="font-weight-bold" style="color : #219ebc ">축하드립니다! 회원님께 입찰되었습니다. <br> </p>
+                                {% endif %}
+                                <!-- seller -->
+                                <p class="font-weight-bold">의뢰자 : {{product.owner}} <br> </p>
+                                <!-- winner -->
+                                <p class="font-weight-bold">배송자 : {{product.winner}} <br> </p>
+                                <p class="font-weight-bold">픽업 지역 : {{product.address_1}} </p>
+                                <p class="font-weight-bold">배송 지역 : {{product.address}} </p>
+                                <!-- Price -->
+                                <p class="font-weight-bold">입찰금액 : {{product.winprice}} 원 <br> </p>
+                            </div>
+                        </div>
+                        <!-- Card Regular -->
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+{% endblock %}

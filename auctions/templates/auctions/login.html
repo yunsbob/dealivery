@@ -1,0 +1,39 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <br>
+    {% if message %}
+        <div class="alert alert-{{ msg_type }}">{{ message }}</div>
+    {% endif %}
+
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center lighten-4">
+
+        <!-- Title -->
+        <br><h1><strong>로그인</strong></h1> <br> <br>
+
+        <!-- <hr class="my-4 pb-2"> -->
+        <br>
+            <img src="../../static/auctions/img/login.svg" alt="indeximage" style="height: 500px;" class="embed-responsive">
+            <br> <br> <br>
+        <!-- Grid row -->
+        <div class="text-left">
+
+            <form action="{% url 'login' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input autofocus class="form-control" type="text" name="username" placeholder="아이디">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="비밀번호">
+                </div>
+                
+                <p align="center"><input class="btn btn btn-outline-primary" type="submit" value="로그인"></p>
+            </form>
+            <br>
+            <p align="center">계정이 없으신가요?<a href="{% url 'register' %}"><strong>회원가입</strong></a></p>
+        </div>
+    </div>
+    <!-- End Jumbotron -->
+    
+{% endblock %}

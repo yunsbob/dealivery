@@ -1,0 +1,70 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <br>
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center">
+        <!-- Title -->
+        <h2 class="card-title h1" style="color : #219ebc ">실시간 요청목록</h2>
+        <!-- Subtitle -->
+        <p class="black-text my-4 font-weight-bold">의뢰자가 요청한 딜리버리 목록입니다.</p>
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-around">
+            <!-- Grid column -->
+            <div class="col-xl-5 pb-4">
+                {% if empty %}
+                    <br>
+                    <img src="../../static/auctions/img/foractive.svg" alt="indeximage" style="height: 350px;" class="embed-responsive">
+                    <br> <br> <br>
+                    <h3>요청된 딜리버리가 없습니다.</h3>
+                {% else %}
+                    {% for product in products%}
+                        <br>
+                        <!-- Card Regular -->
+                        <div class="card card-cascade" >
+                            <div style="text-align : center; align-self: center;height: 200px;width:200px;" >
+                            <!-- Card image -->
+                            <div class="view view-cascade overlay" >
+                                {% if product.category == "신선" %}
+                                <img class="card-img-top" src="../../static/auctions/img/fresh1.svg" alt="Card image cap" >
+                                {% elif product.category == "파손" %}
+                                <img class="card-img-top" src="../../static/auctions/img/fragile1.svg" alt="Card image cap" >
+                                {% elif product.category == "일반" %}
+                                <img class="card-img-top" src="../../static/auctions/img/regular1.svg" alt="Card image cap">
+                                {% endif %}
+                                <a>
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                                </div>
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade text-center">
+                                <!-- Title -->
+                                <h4 class="card-title"><strong>{{product.address}}</strong></h4>
+                                <!-- Subtitle -->
+                                <h6 class="font-weight-bold indigo-text py-2">{{product.category}}</h6>
+                                <!-- Text -->
+                                <p class="lead">의뢰자 : {{product.seller}} <br> </p>
+                                <!-- Text -->
+                                <p class="">{{product.description}} <br> </p>
+                                <!-- Price -->
+                                <p class="font-weight-bold">{{product.starting_bid}} 원 <br> </p>
+                                <!-- Button -->
+                                <a href="{% url 'viewlisting' product.id %}" class="btn btn btn-outline-primary">보기</a>
+                            </div>
+                            <!-- Card footer -->
+                            <div class="card-footer text-muted text-center">
+                                {{product.created_at}}
+                            </div>
+                        </div>
+                        <!-- Card Regular -->
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+{% endblock %}

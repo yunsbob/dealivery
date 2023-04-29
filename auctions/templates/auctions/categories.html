@@ -1,0 +1,29 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <br>
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center mx-2 mb-5">
+
+        <!-- Title -->
+        <h2 class="card-title h2">카테고리</h2>
+        <!-- Subtitle -->
+        <p class="my-4 h6">카테고리를 선택하여 해당 카테고리 목록을 불러옵니다.</p>
+        <br> <br>
+        <img src="../../static/auctions/img/forcategories.svg" alt="indeximage" style="height: 350px;" class="embed-responsive"> <br> <br> <br> 
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-center">
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+                <ul class="list-group">
+                    <a href="{% url 'category' '일반' %}"><li class="list-group-item"><i class="fas fa-tshirt mr-5"></i> 일반</li></a>
+                    <a href="{% url 'category' '파손' %}"><li class="list-group-item"><i class="fas fa-gavel mr-5"></i> 파손</li></a>
+                    <a href="{% url 'category' '신선' %}"><li class="list-group-item"><i class="fas fa-dice mr-5"></i> 신선</li></a>
+                </ul>
+            </div>
+            <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+    </div>
+    <!-- Jumbotron -->
+{% endblock %}

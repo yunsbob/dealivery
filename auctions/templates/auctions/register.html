@@ -1,0 +1,47 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if message %}
+        <div class="alert alert-danger">{{ message }}</div>
+    {% endif %}
+
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center lighten-4">
+
+        <!-- Title -->
+        <br><h1><strong>회원가입</strong></h1> <br> <br>
+
+        <!-- <hr class="my-4 pb-2"> -->
+        <br>
+            <img src="../../static/auctions/img/register.svg" alt="indeximage" style="height: 500px;" class="embed-responsive">
+            <br> <br> <br>
+        <!-- Grid row -->
+        <div class="text-left">
+
+            <form action="{% url 'register' %}" method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" autofocus type="text" name="username" placeholder="아이디">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="email" name="email" placeholder="이메일">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" autofocus type="text" name="phone_number" placeholder="전화번호">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="password" placeholder="비밀번호">
+                </div>
+                <div class="form-group">
+                    <input class="form-control" type="password" name="confirmation" placeholder="비밀번호 확인">
+                </div>
+                <p align="center"><input class="btn btn btn-outline-primary" type="submit" value="가입하기"></p>
+            </form>
+            <br>
+            <p align="center">계정이 이미 있으신가요? <a href="{% url 'login' %}"><strong>로그인 하러가기</strong></a></p>
+        </div>
+    </div>
+    <!-- End Jumbotron -->
+
+{% endblock %}

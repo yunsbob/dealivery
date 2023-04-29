@@ -1,0 +1,142 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center">
+
+        <!-- Title -->
+        <h2 class="card-title h1"style="color : #219ebc ">마이페이지</h2>
+        <!-- Subtitle -->
+        <p class="my-4 font-weight-bold">계정 정보와 매칭현황을 확인할 수 있습니다.</p>
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-center">
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+                <!-- profile content -->
+                <div class="container mt-5">
+                    <!--Section: Content-->
+                    <section class="text-center dark-grey-text">
+                        <div class="wrapper-carousel-fix">
+                            <!-- Carousel Wrapper -->
+                            <div id="carousel-example-1" class="carousel no-flex testimonial-carousel slide carousel-fade" data-ride="carousel"
+                                data-interval="false">
+                                <!--Slides-->
+                                <div class="carousel-inner" role="listbox">
+                                    <!--First slide-->
+                                    <div class="carousel-item active">
+                                        <div class="testimonial">
+                                            <!--Avatar-->
+                                            <div class="avatar mx-auto mb-4">
+                                                <img src="../../static/auctions/img/prof2.svg" style="width: 50%;" class="rounded-circle img-fluid"
+                                                alt="First sample avatar image">
+                                            </div>
+                                            
+                                            <h4 class="font-weight-bold">{{request.user.username}}</h4>
+                                            <h6 class="font-weight-bold my-3">{{request.user.email}}</h6>
+                                            <h6 class="font-weight-bold my-3">{{request.user.phone_number}}</h6>
+                                        </div>
+                                    </div>
+                                    <!--First slide-->
+                                </div>
+                            </div>
+                            <!-- Carousel Wrapper -->
+                        </div>
+                    </section>
+                    <!--Section: Content-->
+                </div>
+                <!-- end profile content -->
+            </div>
+            <!-- Grid column -->
+        </div>
+        <!-- Grid row -->
+
+        <hr class="my-4">
+        <br>
+        <h4 class="card-title"><strong>찜목록</strong></h4>
+
+        {% if present %}
+            {% for item in product_list %}
+                <!-- Grid row -->
+                <br> <br>
+                <div class="card text-center" style = "width:40%; left:30%;">
+                    <a href="{% url 'viewlisting' item.id %}"><h5 class="card-header h3 ">{{item.address}}</h5></a>
+                    <div class="card-body">
+                        <h5 class="card-title">의뢰자 : {{item.seller}}</h5>
+                        <p class="lead">가격 : {{item.starting_bid}} 원</p>
+                        <p class="card-text">{{item.created_at}}</p>
+                    </div>
+                </div>
+            {% endfor %}
+        {% else %}
+            <div class="text-center">
+                <!-- Text -->
+                <br> <br>
+                <p class="lead">찜한 상품이 없습니다.</p>
+            </div>
+        {% endif %}
+    </div>
+    <!-- End Jumbotron -->
+
+    <!-- Jumbotron -->
+    <div class="jumbotron text-center">
+        <!-- Title -->
+        <h2 class="card-title h2">매칭 현황</h2>
+        <!-- Subtitle -->
+        <p class="black-text my-4 font-weight-bold">현재 매칭된 정보를 확인하세요.</p>
+        <!-- Grid row -->
+        <div class="row d-flex justify-content-center">
+            <!-- Grid column -->
+            <div class="col-xl-7 pb-2">
+                {% if products %}
+                    {% for product in products %}
+                        <br>
+                        <!-- Card Regular -->
+                        <div class="card card-cascade" >
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade text-center">
+                                <!-- Title -->
+                                <h4 class="card-title"><strong>{{product.address}}</strong></h4>
+                                <!-- seller -->
+                                <p class="font-weight-bold">의뢰자 : {{product.owner}} <br> </p>
+                                <!-- winner -->
+                                <p class="font-weight-bold">접수인 : {{product.winner}} <br> </p>
+                                <p class="font-weight-bold">픽업 지역 : {{product.address_1}} </p>
+                                <p class="font-weight-bold">픽업 상세주소 : {{product.address_detail_1}} </p>
+                                <p class="font-weight-bold">배송 지역 : {{product.address}} </p>
+                                <p class="font-weight-bold">배송 상세주소 : {{product.address_detail}} </p>
+                                <p class="font-weight-bold">요청사항 :  {{product.description}}</p>
+                                <p class="font-weight-bold">전화번호 : {{request.user.phone_number}} </p>
+                                <p class="font-weight-bold">접수 가격: {{product.winprice}}원 <br> </p>
+                            </div>
+                        </div>
+                        <!-- Card Regular -->
+                    {% endfor %}
+                {% endif %}
+                {% if products2 %}
+                    {% for product in products2 %}
+                        <br>
+                        <!-- Card Regular -->
+                        <div class="card card-cascade" >
+                            <!-- Card content -->
+                            <div class="card-body card-body-cascade text-center">
+                                <!-- Title -->
+                                <h4 class="card-title"><strong>{{product.address}}</strong></h4>
+                                <!-- seller -->
+                                <p class="font-weight-bold">의뢰자 : {{product.owner}} <br> </p>
+                                <!-- winner -->
+                                <p class="font-weight-bold">배송자 : {{product.winner}} <br> </p>
+                                <p class="font-weight-bold">픽업 주소 : {{product.address_1}} {{product.address_detail_1}} </p>
+                                <p class="font-weight-bold">배송 주소 : {{product.address}} {{product.address_detail}}</p>
+                                <p class="font-weight-bold">요청사항 :  {{product.description}}</p>
+                                <p class="font-weight-bold">전화번호 : {{request.user.phone_number}} </p>
+                                <p class="font-weight-bold">접수 가격: {{product.winprice}} 원 <br> </p>
+                            </div>
+                        </div>
+                        <!-- Card Regular -->
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    <!-- Jumbotron -->
+{% endblock %}

@@ -1,0 +1,126 @@
+{% extends "auctions/layout.html" %}
+
+{% block body %}
+
+    {% if message %}
+        <div class="alert alert-{{msg_type}}">{{ message }}</div>
+    {% endif %}
+
+    <div class="jumbotron text-center" style="padding: 3% 10%;">
+
+        <br>
+        <br>
+        <h1><strong>{{product.address}}</strong></h1> <br>
+        <br>
+        <div class="text-center" style="text-align:center;padding:3% 10%; left:50%;">
+                            <!-- Card image -->
+                            <div class="view view-cascade overlay" >
+                                {% if product.category == "신선" %}
+                                <img class="card-img-top" src="../../static/auctions/img/fresh1.svg" alt="Card image cap" style="height: 30%; width:30%;left:34.5%;"  >
+                                {% elif product.category == "파손" %}
+                                <img class="card-img-top" src="../../static/auctions/img/fragile1.svg" alt="Card image cap" style="height: 30%; width:30%;left:34.5%;">
+                                {% elif product.category == "일반" %}
+                                <img class="card-img-top" src="../../static/auctions/img/regular1.svg" alt="Card image cap" style="height: 30%; width:30%;left:34.5%;">
+                                {% endif %}
+                                <a>
+                                    <div class="mask rgba-white-slight"></div>
+                                </a>
+                            </div>
+                                </div>
+            <br> <br> <br>
+        <p class="lead" align="justify"><strong>요청사항 : </strong> {{product.description}}</p>
+        <p class="lead" align="justify"><strong>픽업 지역 : </strong>{{product.address_1}} {{product.address_detail_1}}</p>
+        <p class="lead" align="justify"><strong>배송 지역 : </strong>{{product.address}} {{product.address_detail}}</p>
+        <p class="lead" align="justify"><strong>카테고리 : </strong>{{product.category}}</p>
+        <p class="lead" align="justify"><strong>희망가격 : </strong>{{product.starting_bid}} 원</p>
+        <p class="lead" align="justify"><strong>의뢰자 : </strong>{{product.seller}}</p>
+        <p class="lead" align="justify"><strong>등록된 시간 : </strong>{{product.created_at}}</p>
+        <br>
+
+        {% if added %}
+            <!-- <input type="button" class="btn btn-danger btn-lg" name="remove" placeholder="Remove from Watchlist"> -->
+            <a href="{% url 'addtowatchlist' product.id %}" class="btn btn-danger btn-lg" name="remove">찜목록에서 지우기</a>
+        {% else %}
+            <!-- <input type="button" class="btn btn-success btn-lg" name="addto" placeholder="Add to Watchlist"> -->
+            <a href="{% url 'addtowatchlist' product.id %}" class="btn btn-outline-success" name="addto">찜목록에 추가하기</a>
+        {% endif %}
+        <br> <br>
+        {% if user.username != product.seller %}
+            <p class="lead" align="justify"><strong>입찰 가격 제시하기 : </strong></p>
+            <form action="{% url 'viewlisting' product.id %}" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <input class="form-control" type="text" name="newbid" placeholder="입찰 할 금액을 적어주세요">
+                </div>
+                <p align="center"><input class="btn btn btn-outline-primary" type="submit" value="보내기"></p>
+            </form>
+        {% endif %}
+        
+
+        <br> <br> <br>
+
+        <!-- Displaying comments-->
+        <div class="jumbotron text-center">
+
+            <!-- Title -->
+            <h2 class="card-title h2">댓글</h2>
+            <!-- Subtitle -->
+            <p class="lead my-4">다른 사용자가 남긴 댓글입니다.</p>
+        
+            {% if comments %}
+
+                {% for comment in comments %}
+                    <br>
+                    <!-- Grid row -->
+                    <div class="card text-center"style = "width:40%; left:30%;">
+                    <h5 class="card-header h5">{{comment.user}}</h5>
+                    <div class="card-body">
+                        <!-- <h5 class="card-title">Rating :</h5> -->
+                        <p class="lead">{{comment.comment}}</p>
+                        <p class="card-text">{{comment.timestamp}}</p>
+                        {% if  user.username == comment.user %}
+                            <a href="{% url 'removecomment' product.id comment.id %}">삭제</a>
+                        {% endif %}
+
+                    </div>
+                    </div>
+                {% endfor %}
+
+
+            {% else %}
+                <div class="text-center">
+                    <!-- Text -->
+                    <br> <br> 
+                    <p class="lead">댓글이 없습니다.</p>
+                </div>
+            {% endif %}
+        </div>
+        <!-- End displaying comments -->
+        
+        {% if user.username != product.seller %}
+            <!-- Displaying comments-->
+            <div class="jumbotron text-center">
+
+                <!-- Title -->
+                <h2 class="card-title h2">댓글 남기기</h2>
+                
+                <form action="{% url 'addcomment' product.id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <textarea class="form-control" name="comment" rows="4" placeholder="댓글"></textarea>
+                    </div>
+                    <p align="center"><input class="btn btn btn-outline-primary" type="submit" value="등록하기"></p>
+                </form>
+            </div>
+            <!-- End add comments -->
+        {% endif %}
+
+        
+
+        {% if user.username == product.seller %}
+            <a href="{% url 'closebid' product.id %}" class="btn btn btn-outline-primary"> 입찰 종료 </a>
+            <a href="{% url 'removelisting' product.id %}" class="btn btn btn-outline-danger"> 삭제 </a>
+        {% endif %}
+
+    </div>
+{% endblock %}
